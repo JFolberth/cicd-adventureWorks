@@ -14,7 +14,7 @@ parameters:
     type: object
     default:
       - projectName: 'sqlmoveme'
-        publishWebProject: false
+        publishWebProject: true
         dotnetTest: false
         efMigrationScript: false
         startUpProjectName: ''
