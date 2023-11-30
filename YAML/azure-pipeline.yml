@@ -18,6 +18,7 @@ parameters:
         dotnetTest: false
         efMigrationScript: false
         startUpProjectName: ''
+        projectNameExtension: '.sqlproj'
   - name: serviceName
     type: string
     default: 'slqmovemecicd'
