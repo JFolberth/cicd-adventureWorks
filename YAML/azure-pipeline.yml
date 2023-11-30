@@ -10,14 +10,14 @@ pool:
   vmImage: 'ubuntu-latest'
 
 parameters:
-  name: projectNamesConfigurations
-  type: object
-  default:
-    - projectName: 'sqlmoveme'
-      publishWebProject: false
-      dotnetTest: false
-      efMigrationScript: false
-      startUpProjectName: ''
+  - name: projectNamesConfigurations
+    type: object
+    default:
+      - projectName: 'sqlmoveme'
+        publishWebProject: false
+        dotnetTest: false
+        efMigrationScript: false
+        startUpProjectName: ''
   - name: serviceName
     type: string
     default: 'slqmovemecicd'
