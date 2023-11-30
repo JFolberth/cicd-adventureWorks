@@ -10,7 +10,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 parameters:
-  projectNamesConfigurations:
+  name: projectNamesConfigurations
+  type: object
+  default:
     - projectName: 'sqlmoveme'
       publishWebProject: false
       dotnetTest: false
