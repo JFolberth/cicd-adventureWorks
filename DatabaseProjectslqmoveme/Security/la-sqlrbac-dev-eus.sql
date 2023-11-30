@@ -1,0 +1,6 @@
+CREATE USER [la-sqlrbac-dev-eus] FOR EXTERNAL PROVIDER
+    WITH DEFAULT_SCHEMA = [SalesLT];
+
+
+GO
+
