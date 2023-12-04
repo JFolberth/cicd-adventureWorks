@@ -14,26 +14,17 @@ parameters:
     type: object
     default:
       - projectName: 'sqlmoveme'
-        publishWebProject: true
-        dotnetTest: false
-        efMigrationScript: false
-        startUpProjectName: ''
         projectExtension: '.sqlproj'
   - name: serviceName
     type: string
     default: 'slqmovemecicd'
-  - name: zipAfterPublish
-    type: boolean
-    default: false
   - name: artifactsToPublish
     type: object
     default: ['security']
 
 
 stages:
-  - template: stages/dotnet_build_stage.yml@templates
+  - template: stages/msbuild_build_stage.yml@templates
     parameters:
       projectNamesConfigurations: ${{ parameters.projectNamesConfigurations}}
       serviceName: '${{ parameters.serviceName}}'
-      zipAfterPublish: ${{ parameters.zipAfterPublish}}
-      artifactsToPublish: ${{ parameters.artifactsToPublish}}
