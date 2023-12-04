@@ -17,7 +17,7 @@ parameters:
         projectExtension: '.sqlproj'
   - name: serviceName
     type: string
-    default: 'slqmovemecicd'
+    default: 'sqlmoveemecicd'
   - name: artifactsToPublish
     type: object
     default: ['security']
