@@ -28,3 +28,4 @@ stages:
     parameters:
       projectNamesConfigurations: ${{ parameters.projectNamesConfigurations}}
       serviceName: '${{ parameters.serviceName}}'
+      artifactsToPublish: ${{ parameters.artifactsToPublish}}
