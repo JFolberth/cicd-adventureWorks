@@ -21,19 +21,11 @@ parameters:
   - name: artifactsToPublish
     type: object
     default: ['security']
-  - name: msbuildVersion
-    type: string
-    default: '4.5'
-  - name: restoreNugetPackages
-    type: boolean
-    default: true
 
 
 stages:
-  - template: stages/msbuild_build_stage.yml@templates
+  - template: stages/dotnet_build_stage.yml@templates
     parameters:
       projectNamesConfigurations: ${{ parameters.projectNamesConfigurations}}
       serviceName: '${{ parameters.serviceName}}'
       artifactsToPublish: ${{ parameters.artifactsToPublish}}
-      msbuildVersion: '${{ parameters.msbuildVersion}}'
-      restoreNugetPackages: ${{ parameters.restoreNugetPackages}}
