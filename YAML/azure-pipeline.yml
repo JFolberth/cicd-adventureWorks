@@ -21,6 +21,9 @@ parameters:
   - name: artifactsToPublish
     type: object
     default: ['security']
+  - name: msbuildVersion
+    type: string
+    default: '4.5'
 
 
 stages:
@@ -29,3 +32,4 @@ stages:
       projectNamesConfigurations: ${{ parameters.projectNamesConfigurations}}
       serviceName: '${{ parameters.serviceName}}'
       artifactsToPublish: ${{ parameters.artifactsToPublish}}
+      msbuildVersion: '${{ parameters.msbuildVersion}}'
