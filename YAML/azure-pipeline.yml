@@ -15,6 +15,7 @@ parameters:
     default:
       - projectName: 'sqlmoveme'
         projectExtension: '.sqlproj'
+        buildArguments: '/p:NetCoreBuild=true'
   - name: serviceName
     type: string
     default: 'sqlmoveemecicd'
