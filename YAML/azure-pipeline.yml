@@ -24,6 +24,9 @@ parameters:
   - name: msbuildVersion
     type: string
     default: '4.5'
+  - name: restoreNugetPackages
+    type: boolean
+    default: true
 
 
 stages:
@@ -33,3 +36,4 @@ stages:
       serviceName: '${{ parameters.serviceName}}'
       artifactsToPublish: ${{ parameters.artifactsToPublish}}
       msbuildVersion: '${{ parameters.msbuildVersion}}'
+      restoreNugetPackages: ${{ parameters.restoreNugetPackages}}
