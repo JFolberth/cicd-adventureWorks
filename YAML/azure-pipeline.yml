@@ -15,6 +15,7 @@ parameters:
     default:
       - projectName: 'sqlmoveme'
         projectExtension: '.sqlproj'
+        msbuildArguments: '/p:VisualStudioVersion=17.0'
   - name: serviceName
     type: string
     default: 'sqlmoveemecicd'
