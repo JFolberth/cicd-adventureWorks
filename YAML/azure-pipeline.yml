@@ -32,8 +32,8 @@ stages:
       projectNamesConfigurations: ${{ parameters.projectNamesConfigurations}}
       serviceName: '${{ parameters.serviceName}}'
       artifactsToPublish: ${{ parameters.artifactsToPublish}}
-  - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main')}}:
-    - template: stages/dacpac_deploy_stage.yml@templates
-      parameters:
-        projectConfigurations: ${{ parameters.projectNamesConfigurations }}
-        serviceName: ${{ parameters.serviceName }}
+
+  - template: stages/dacpac_deploy_stage.yml@templates
+    parameters:
+      projectConfigurations: ${{ parameters.projectNamesConfigurations }}
+      serviceName: ${{ parameters.serviceName }}
