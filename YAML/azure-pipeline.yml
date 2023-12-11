@@ -18,8 +18,8 @@ parameters:
         regionAbrvs: ['eus']
         projectExtension: '.sqlproj'
         buildArguments: '/p:NetCoreBuild=true'
-        serverName: 'moveme'
-        databaseName: 'moveme'
+        sqlServerName: 'moveme'
+        sqlDatabaseName: 'moveme'
         ipDetectionMethod: 'AutoDetect'
         deployType: 'DacpacTask'
   - name: serviceName
