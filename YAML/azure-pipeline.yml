@@ -34,5 +34,5 @@ stages:
   - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main')}}:
     - template: stages/dacpac_deploy_stage.yml@templates
       parameters:
-        environmentObjects: ${{ parameters.environmentObjects }}
+        projectNamesConfigurations: ${{ parameters.projectNamesConfigurations }}
         serviceName: ${{ parameters.serviceName }}
