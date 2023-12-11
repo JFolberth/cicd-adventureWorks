@@ -16,7 +16,8 @@ parameters:
       - projectName: 'sqlmoveme'
         projectExtension: '.sqlproj'
         buildArguments: '/p:NetCoreBuild=true'
-        serverName: 
+        serverName: 'moveme'
+        databaseName: 'moveme'
   - name: serviceName
     type: string
     default: 'sqlmoveemecicd'
@@ -34,5 +35,5 @@ stages:
   - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main')}}:
     - template: stages/dacpac_deploy_stage.yml@templates
       parameters:
-        projectNamesConfigurations: ${{ parameters.projectNamesConfigurations }}
+        projectConfigurations: ${{ parameters.projectNamesConfigurations }}
         serviceName: ${{ parameters.serviceName }}
