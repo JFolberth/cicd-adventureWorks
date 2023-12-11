@@ -20,6 +20,8 @@ parameters:
         buildArguments: '/p:NetCoreBuild=true'
         serverName: 'moveme'
         databaseName: 'moveme'
+        ipDetectionMethod: 'AutoDetect'
+        deployType: 'DacpacTask'
   - name: serviceName
     type: string
     default: 'sqlmoveemecicd'
