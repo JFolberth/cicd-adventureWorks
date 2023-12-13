@@ -19,7 +19,7 @@ parameters:
         projectExtension: '.sqlproj'
         buildArguments: '/p:NetCoreBuild=true'
         sqlServerName: 'moveme'
-        sqlDatabaseName: 'sqlmoveme'
+        sqlDatabaseName: 'moveme'
         ipDetectionMethod: 'AutoDetect'
         deployType: 'DacpacTask'
         authenticationType: 'servicePrincipal'
