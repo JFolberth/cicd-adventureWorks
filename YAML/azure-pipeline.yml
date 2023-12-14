@@ -14,7 +14,7 @@ parameters:
     type: object
     default:
       - projectName: 'sqlmoveme'
-        environmentName: 'dev'
+        environmentName: 'dev2'
         regionAbrvs: ['eus']
         projectExtension: '.sqlproj'
         buildArguments: '/p:NetCoreBuild=true'
