@@ -45,11 +45,11 @@ stages:
     jobs:
       - job: Deploy
       steps:
-      - task: Bash@3
-        inputs:
-          targetType: 'inline'
-          script: |
-          SqlPackage /Action:Publish /SourceFile:$(Pipeline.Workspace)/sqlmoveme/AdventureWorks.dacpac /TargetConnectionString:"Server=tcp:sql-moveme-dev-eus.database.windows.net,1433;Initial Catalog=sqldbmoveme;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication="Active Directory Default";"
+        - task: Bash@3
+          inputs:
+            targetType: 'inline'
+            script: |
+            SqlPackage /Action:Publish /SourceFile:$(Pipeline.Workspace)/sqlmoveme/AdventureWorks.dacpac /TargetConnectionString:"Server=tcp:sql-moveme-dev-eus.database.windows.net,1433;Initial Catalog=sqldbmoveme;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication="Active Directory Default";"
 
   # - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main')}}:
   #   - template: stages/dacpac_deploy_stage.yml@templates
