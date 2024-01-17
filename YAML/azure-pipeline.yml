@@ -17,7 +17,7 @@ parameters:
         environmentName: 'dev2'
         regionAbrvs: ['eus']
         projectExtension: '.sqlproj'
-        buildArguments: '/p:NetCoreBuild=true'
+        buildArguments: '/p:NetCoreBuild=true /dsp:Actions.sql /drp:Actions.xml'
         sqlServerName: 'moveme'
         sqlDatabaseName: 'moveme'
         ipDetectionMethod: 'AutoDetect'
