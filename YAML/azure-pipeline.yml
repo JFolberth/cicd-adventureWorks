@@ -47,11 +47,8 @@ stages:
           displayName: 'upgrade sqlpackage'
           inputs:
             targetType: 'inline'
-            script: |
-              # use evergreen or specific dacfx msi link below
-              wget -O DacFramework.msi "https://aka.ms/dacfx-msi"
-              msiexec.exe /i "DacFramework.msi" /qn
-              
+            script: wget -O DacFramework.msi "https://aka.ms/dacfx-msi" msiexec.exe /i "DacFramework.msi" /qn
+
           - task: Bash@3
             inputs:
               targetType: 'inline'
