@@ -37,23 +37,8 @@ stages:
       projectNamesConfigurations: ${{ parameters.projectNamesConfigurations}}
       serviceName: '${{ parameters.serviceName}}'
       artifactsToPublish: ${{ parameters.artifactsToPublish}}
-
-  - stage: Deploy
-    displayName: Deploy
-    jobs:
-      - job: Deploy
-        steps:
-        - task: Bash@3
-          inputs:
-            targetType: 'inline'
-            script: dotnet tool install -g microsoft.sqlpackage
-        - task: Bash@3
-          inputs:
-            targetType: 'inline'
-            script: sqlpackage /Action:Publish /SourceFile:$(Pipeline.Workspace)/sqlmoveme/AdventureWorks.dacpac /TargetConnectionString:"Server=tcp:sql-moveme-dev-eus.database.windows.net,1433;Initial Catalog=sqldbmoveme;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication="Active Directory Default";"
-
-  # - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main')}}:
-  #   - template: stages/dacpac_deploy_stage.yml@templates
-  #     parameters:
-  #       projectConfigurations: ${{ parameters.projectNamesConfigurations }}
-  #       serviceName: ${{ parameters.serviceName }}
+  - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main')}}:
+    - template: stages/dacpac_deploy_stage.yml@templates
+      parameters:
+        projectConfigurations: ${{ parameters.projectNamesConfigurations }}
+        serviceName: ${{ parameters.serviceName }}
