@@ -43,6 +43,14 @@ stages:
     jobs:
       - job: Deploy
         steps:
+        - task: PowerShell@2
+          displayName: 'upgrade sqlpackage'
+          inputs:
+            targetType: 'inline'
+            script: |
+              # use evergreen or specific dacfx msi link below
+              wget -O DacFramework.msi "https://aka.ms/dacfx-msi"
+              msiexec.exe /i "DacFramework.msi" /qn
           - task: Bash@3
             inputs:
               targetType: 'inline'
