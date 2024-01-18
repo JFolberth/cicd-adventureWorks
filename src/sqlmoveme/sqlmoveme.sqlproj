@@ -85,9 +85,6 @@
     <Build Include="SalesLT\Views\vGetAllCategories.sql" />
     <Build Include="SalesLT\Views\vProductAndDescription.sql" />
     <Build Include="SalesLT\Views\vProductModelCatalogDescription.sql" />
-    <Build Include="Security\db_datareader for la-sqlrbac-dev-eus.sql" />
-    <Build Include="Security\db_datawriter for la-sqlrbac-dev-eus.sql" />
-    <Build Include="Security\la-sqlrbac-dev-eus.sql" />
     <Build Include="Security\SalesLT.sql" />
   </ItemGroup>
   <Target Name="BeforeBuild">
