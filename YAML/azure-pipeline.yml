@@ -33,7 +33,7 @@ parameters:
 
 
 stages:
-  - template: stages/dotnet_build_stage.yml@templates
+  - template: stages/dotnet_sql_build_stage.yml@templates
     parameters:
       projectNamesConfigurations: ${{ parameters.projectNamesConfigurations}}
       serviceName: '${{ parameters.serviceName}}'
