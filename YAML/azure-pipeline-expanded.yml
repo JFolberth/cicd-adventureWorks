@@ -1,9 +1,4 @@
 resources:
-  repositories:
-  - repository: templates
-    type: github
-    name: JFolberth/TheYAMLPipelineOne
-    endpoint: JFolberth
 pool:
   vmImage: 'windows-latest'
 parameters:
@@ -82,35 +77,7 @@ stages:
     environment:
       name: dev2
     dependsOn: []
-    variables:
-    - name: azureServiceConnectionName
-      value: 'AzureDevExtServiceConnection'
-    - name: azureSubscriptionID
-      value: '898e66c4-4550-43c4-93a1-2d3c16932df2'
-    - name: functionAppAbrv
-      value: 'fn'
-    - name: resourceGroupAbrv
-      value: 'rg'
-    - name: apiManagerAbrv
-      value: 'apim'
-    - name: apiAbrv
-      value: 'api'
-    - name: keyVaultAbrv
-      value: 'kv'
-    - name: sqlServerAbrv
-      value: 'sql'
-    - name: sqlServerURLSuffix
-      value: '.database.windows.net'
-    - name: sqlDBAbrv
-      value: 'sqldb'
-    - name: webAppAbrv
-      value: 'app'
-    - name: dataFactoryAbrv
-      value: 'adf'
-    - name: storageAccountAbrv
-      value: 'sa'
-    - name: deploymentName
-      value: sqlmoveemecicd_app_deploy_dev2_eus
+   
     strategy:
       runOnce:
         deploy:
@@ -119,10 +86,10 @@ stages:
             displayName: Publish sqlmoveme on sql-moveme-dev2-eus.database.windows.net
             inputs:
               DeploymentAction: Publish
-              azureSubscription: AzureDevExtServiceConnection
+              azureSubscription: [Insert Service Connection Name]
               AuthenticationType: servicePrincipal
-              ServerName: sql-moveme-dev2-eus.database.windows.net
-              DatabaseName: sqlmoveme
+              ServerName: [SQL Server Destination]
+              DatabaseName: [SQL Database Destination]
               deployType: DacpacTask
               DacpacFile: $(Agent.BuildDirectory)\sqlmoveme\**\*.dacpac
               AdditionalArguments: ''
