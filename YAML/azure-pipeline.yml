@@ -4,7 +4,6 @@ resources:
     type: github
     name: JFolberth/TheYAMLPipelineOne
     endpoint: JFolberth
-    ref: feature/dacpac
 
 pool:
   vmImage: 'windows-latest'

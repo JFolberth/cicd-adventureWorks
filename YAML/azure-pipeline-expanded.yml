@@ -1,0 +1,130 @@
+resources:
+  repositories:
+  - repository: templates
+    type: github
+    name: JFolberth/TheYAMLPipelineOne
+    endpoint: JFolberth
+pool:
+  vmImage: 'windows-latest'
+parameters:
+- name: projectNamesConfigurations
+  type: object
+  default:
+  - projectName: 'sqlmoveme'
+    environmentName: 'dev2'
+    regionAbrvs:
+    - 'eus'
+    projectExtension: '.sqlproj'
+    buildArguments: '/p:NetCoreBuild=true'
+    sqlServerName: 'moveme'
+    sqlDatabaseName: 'moveme'
+    resourceGroupName: sqlserver
+    ipDetectionMethod: 'AutoDetect'
+    deployType: 'DacpacTask'
+    authenticationType: 'servicePrincipal'
+- name: serviceName
+  type: string
+  default: 'sqlmoveemecicd'
+- name: artifactsToPublish
+  type: object
+  default:
+  - 'security'
+stages:
+- stage: sqlmoveemecicd_build
+  variables:
+  - name: solutionPath
+    value: $(Build.SourcesDirectory)//
+  jobs:
+  - job: Publish_security
+    steps:
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Pipeline Artifact security '
+      inputs:
+        targetPath: security
+        artifact: security
+        properties: ''
+  - job: build_publish_sql_sqlmoveme
+    variables:
+    - name: srcFilePath
+      value: 'src'
+    - name: projectName
+      value: sqlmoveme
+    - name: projectPath
+      value: $(Build.SourcesDirectory)/src/sqlmoveme
+    - name: testProjectPath
+      value: $(Build.SourcesDirectory)/src/sqlmoveme
+    - name: startUpProjectPath
+      value: $(Build.SourcesDirectory)/src/
+    steps:
+    - task: UseDotNet@2
+      displayName: Use .NET SDK v
+      inputs:
+        packageType: 'sdk'
+        version: ''
+        includePreviewVersions: true
+    - task: NuGetAuthenticate@0
+      displayName: 'NuGet Authenticate'
+    - task: DotNetCoreCLI@2
+      displayName: dotnet build
+      inputs:
+        command: build
+        projects: $(Build.SourcesDirectory)/src/sqlmoveme/*.sqlproj
+        arguments: --configuration Release /p:NetCoreBuild=true
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Pipeline Artifact sqlmoveme '
+      inputs:
+        targetPath: $(Build.SourcesDirectory)/src/sqlmoveme/bin/Release
+        artifact: sqlmoveme
+        properties: ''
+- stage: sqlmoveemecicd_dev2_eus_dacpac_deploy
+  jobs:
+  - deployment: sqlmoveemecicd_app_dev2_eus
+    environment:
+      name: dev2
+    dependsOn: []
+    variables:
+    - name: azureServiceConnectionName
+      value: 'AzureDevExtServiceConnection'
+    - name: azureSubscriptionID
+      value: '898e66c4-4550-43c4-93a1-2d3c16932df2'
+    - name: functionAppAbrv
+      value: 'fn'
+    - name: resourceGroupAbrv
+      value: 'rg'
+    - name: apiManagerAbrv
+      value: 'apim'
+    - name: apiAbrv
+      value: 'api'
+    - name: keyVaultAbrv
+      value: 'kv'
+    - name: sqlServerAbrv
+      value: 'sql'
+    - name: sqlServerURLSuffix
+      value: '.database.windows.net'
+    - name: sqlDBAbrv
+      value: 'sqldb'
+    - name: webAppAbrv
+      value: 'app'
+    - name: dataFactoryAbrv
+      value: 'adf'
+    - name: storageAccountAbrv
+      value: 'sa'
+    - name: deploymentName
+      value: sqlmoveemecicd_app_deploy_dev2_eus
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: SqlAzureDacpacDeployment@1
+            displayName: Publish sqlmoveme on sql-moveme-dev2-eus.database.windows.net
+            inputs:
+              DeploymentAction: Publish
+              azureSubscription: AzureDevExtServiceConnection
+              AuthenticationType: servicePrincipal
+              ServerName: sql-moveme-dev2-eus.database.windows.net
+              DatabaseName: sqlmoveme
+              deployType: DacpacTask
+              DacpacFile: $(Agent.BuildDirectory)\sqlmoveme\**\*.dacpac
+              AdditionalArguments: ''
+              DeleteFirewallRule: True
+
