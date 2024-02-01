@@ -3,10 +3,18 @@
   <Sdk Name="Microsoft.Build.Sql" Version="0.1.12-preview" />
   <PropertyGroup>
     <Name>sqlmoveme.Tests</Name>
-    <ProjectGuid>{B305014A-2514-433C-90F4-A0FCC72B1D49}</ProjectGuid>
+    <ProjectGuid>{50218575-05BB-400D-A640-F94492DBD01F}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
     <ModelCollation>1033, CI</ModelCollation>
   </PropertyGroup>
+  <ItemGroup>
+    <ArtifactReference Include="..\sqlmoveme\bin\Release\sqlmoveme.dacpac">
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+    </ArtifactReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scripts" />
+  </ItemGroup>
   <Target Name="BeforeBuild">
     <Delete Files="$(BaseIntermediateOutputPath)\project.assets.json" />
   </Target>
