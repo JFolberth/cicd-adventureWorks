@@ -1,4 +1,4 @@
-ALTER PROCEDURE [SalesLT].[GetAddressByCity]
+CREATE PROCEDURE [SalesLT].[GetAddressByCity]
   @City varchar
 AS
   SELECT [AddressLine1], [City], [StateProvince], [CountryRegion], [PostalCode]
