@@ -15,6 +15,9 @@
   <ItemGroup>
     <Folder Include="Scripts" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Remove="Scripts\RunTestCases.sql" />
+  </ItemGroup>
   <Target Name="BeforeBuild">
     <Delete Files="$(BaseIntermediateOutputPath)\project.assets.json" />
   </Target>
