@@ -1,7 +1,7 @@
 CREATE SCHEMA TestPerson;
 GO
 
-CREATE PROCEDURE [TestPerson].[TestGetAddressByCitySuccess]
+ALTER PROCEDURE [TestPerson].[TestGetAddressByCitySuccess]
 AS
 BEGIN
   EXEC tSQLt.FakeTable @TableName = 'SalesLT.Address';
