@@ -1,3 +1,5 @@
+USE sqlmoveme
+
 SET IDENTITY_INSERT [SalesLT].[Customer] ON 
 
 INSERT [SalesLT].[Customer] ([CustomerID], [NameStyle], [Title], [FirstName], [MiddleName], [LastName], [Suffix], [CompanyName], [SalesPerson], [EmailAddress], [Phone], [PasswordHash], [PasswordSalt], [rowguid], [ModifiedDate]) VALUES (1, 0, N'Mr.', N'Orlando', N'N.', N'Gee', NULL, N'A Bike Store', N'adventure-works\pamela0', N'orlando0@adventure-works.com', N'245-555-0173', N'L/Rlwxzp4w7RWmEgXX+/A7cXaePEPcp+KwQhl2fJL7w=', N'1KjXYs4=', N'3f5ae95e-b87d-4aed-95b4-c3797afcb74f', CAST(N'2005-08-01T00:00:00.000' AS DateTime))
