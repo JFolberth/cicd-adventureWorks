@@ -18,6 +18,12 @@
   <ItemGroup>
     <Build Remove="Scripts\RunTestCases.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="InstalltSQLt.sql.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="runtSQLtTestCases.sql.sql" />
+  </ItemGroup>
   <Target Name="BeforeBuild">
     <Delete Files="$(BaseIntermediateOutputPath)\project.assets.json" />
   </Target>
