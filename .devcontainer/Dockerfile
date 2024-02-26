@@ -33,7 +33,7 @@ COPY sqlmoveme.dacpac /tmp/db/db.dacpac
 
 # Configure external build arguments to allow configurability.
 ARG DBNAME=sqlmoveme
-ARG PASSWORD = 'P@ssW0rd'
+ARG PASSWORD='P@ssW0rd'
 
 # Configure the required environmental variables
 ENV ACCEPT_EULA=Y
