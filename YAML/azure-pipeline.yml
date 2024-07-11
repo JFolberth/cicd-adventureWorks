@@ -4,7 +4,6 @@ resources:
     type: github
     name: JFolberth/TheYAMLPipelineOne
     endpoint: JFolberth
-    ref: fix/dacpac_IP_detection
 
 pool:
   vmImage: 'windows-latest'
