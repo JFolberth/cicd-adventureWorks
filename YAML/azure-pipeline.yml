@@ -30,6 +30,10 @@ parameters:
   - name: artifactsToPublish
     type: object
     default: ['security', 'infrastructure']
+  - name: deploymentScope
+    type: string
+    default: 'resourceGroup'
+
 
 
 stages:
