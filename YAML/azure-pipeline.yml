@@ -46,9 +46,11 @@ stages:
       serviceName: '${{ parameters.serviceName}}'
       artifactsToPublish: ${{ parameters.artifactsToPublish}}
       deploymentScope: ${{ parameters.deploymentScope}}
+      bicepParamExt: ${{ parameters.bicepParamExt}}
   - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main')}}:
     - template: stages/dacpac_infra_deploy_stage.yml@templates
       parameters:
         projectConfigurations: ${{ parameters.projectNamesConfigurations }}
         serviceName: ${{ parameters.serviceName }}
         deploymentScope: ${{ parameters.deploymentScope}}
+        bicepParamExt: ${{ parameters.bicepParamExt}}
