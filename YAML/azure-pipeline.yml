@@ -4,6 +4,7 @@ resources:
     type: github
     name: JFolberth/TheYAMLPipelineOne
     endpoint: JFolberth
+    ref: feature/dacpac_infra
 
 pool:
   vmImage: 'windows-latest'
@@ -28,17 +29,17 @@ parameters:
     default: 'sqlmoveemecicd'
   - name: artifactsToPublish
     type: object
-    default: ['security']
+    default: ['security', 'infrastructure']
 
 
 stages:
-  - template: stages/dotnet_sql_build_stage.yml@templates
+  - template: stages/dotnet_sql_infra_build_stage.yml@templates
     parameters:
       projectNamesConfigurations: ${{ parameters.projectNamesConfigurations}}
       serviceName: '${{ parameters.serviceName}}'
       artifactsToPublish: ${{ parameters.artifactsToPublish}}
   - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main')}}:
-    - template: stages/dacpac_deploy_stage.yml@templates
+    - template: stages/dacpac_infra_deploy_stage.yml@templates
       parameters:
         projectConfigurations: ${{ parameters.projectNamesConfigurations }}
         serviceName: ${{ parameters.serviceName }}
