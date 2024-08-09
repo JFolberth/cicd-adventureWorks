@@ -26,7 +26,7 @@ parameters:
         authenticationType: 'servicePrincipal'
   - name: serviceName
     type: string
-    default: 'sqlmoveemecicd'
+    default: 'bicepaadentra'
   - name: artifactsToPublish
     type: object
     default: ['security', 'infrastructure']
