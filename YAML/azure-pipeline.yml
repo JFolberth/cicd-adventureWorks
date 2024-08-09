@@ -33,6 +33,9 @@ parameters:
   - name: deploymentScope
     type: string
     default: 'resourceGroup'
+  - name: bicepParamExt
+    type: boolean
+    default: true
 
 
 
