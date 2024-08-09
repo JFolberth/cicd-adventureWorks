@@ -18,9 +18,9 @@ parameters:
         regionAbrvs: ['eus']
         projectExtension: '.sqlproj'
         buildArguments: '/p:NetCoreBuild=true'
-        sqlServerName: 'moveme'
+        sqlServerName: 'bicepaadentra'
         sqlDatabaseName: 'moveme'
-        resourceGroupName: sqlserver
+        resourceGroupName: bicepaadentra
         ipDetectionMethod: 'AutoDetect'
         deployType: 'DacpacTask'
         authenticationType: 'servicePrincipal'
