@@ -6,6 +6,7 @@ CREATE TABLE [SalesLT].[Address] (
     [StateProvince] [dbo].[Name]     NOT NULL,
     [CountryRegion] [dbo].[Name]     NOT NULL,
     [PostalCode]    NVARCHAR (15)    NOT NULL,
+    [Email] VARCHAR(100) MASKED WITH (FUNCTION = 'email()') DEFAULT 'test@aol.com' NOT NULL,
     [rowguid]       UNIQUEIDENTIFIER CONSTRAINT [DF_Address_rowguid] DEFAULT (newid()) NOT NULL,
     [ModifiedDate]  DATETIME         CONSTRAINT [DF_Address_ModifiedDate] DEFAULT (getdate()) NOT NULL,
     CONSTRAINT [PK_Address_AddressID] PRIMARY KEY CLUSTERED ([AddressID] ASC),
