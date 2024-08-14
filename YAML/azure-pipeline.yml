@@ -26,6 +26,7 @@ parameters:
         ipDetectionMethod: 'AutoDetect'
         deployType: 'DacpacTask'
         authenticationType: 'servicePrincipal'
+        projectConfiguration: 'Release'
   - name: serviceName
     type: string
     default: 'bicepaadentra'
