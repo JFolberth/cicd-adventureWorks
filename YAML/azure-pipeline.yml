@@ -5,6 +5,7 @@ pool:
   vmImage: 'windows-latest'
 stages:
 - stage: bicepaadentra_build
+  jobs:
   - job: build_publish_sql_sqlmoveme
     steps:
     - task: UseDotNet@2
