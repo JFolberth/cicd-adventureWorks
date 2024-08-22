@@ -6,6 +6,14 @@ pool:
 stages:
 - stage: bicepaadentra_build
   jobs:
+  - job: Publish_security
+    steps:
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Pipeline Artifact security '
+      inputs:
+        targetPath: security
+        artifact: security
+        properties: ''
   - job: build_publish_sql_sqlmoveme
     steps:
     - task: UseDotNet@2
