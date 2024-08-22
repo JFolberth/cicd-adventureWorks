@@ -4,53 +4,30 @@ resources:
     type: github
     name: JFolberth/TheYAMLPipelineOne
     endpoint: JFolberth
-    ref: feature/dacpac_infra
+trigger:
+  none:
 
 pool:
   vmImage: 'windows-latest'
-
-parameters:
-  - name: projectNamesConfigurations
-    type: object
-    default:
-      - projectName: 'sqlmoveme'
-        environmentName: 'dev2'
-        regionAbrvs: ['eus']
-        projectExtension: '.sqlproj'
-        buildArguments: '/p:NetCoreBuild=true'
-        sqlServerName: 'bicepaadentra'
-        sqlDatabaseName: 'moveme'
-        resourceGroupName: bicepaadentra
-        ipDetectionMethod: 'AutoDetect'
-        deployType: 'DacpacTask'
-        authenticationType: 'servicePrincipal'
-  - name: serviceName
-    type: string
-    default: 'bicepaadentra'
-  - name: artifactsToPublish
-    type: object
-    default: ['security', 'infrastructure']
-  - name: deploymentScope
-    type: string
-    default: 'resourceGroup'
-  - name: bicepParamExt
-    type: boolean
-    default: true
-
-
-
 stages:
-  - template: stages/dotnet_sql_infra_build_stage.yml@templates
-    parameters:
-      projectNamesConfigurations: ${{ parameters.projectNamesConfigurations}}
-      serviceName: '${{ parameters.serviceName}}'
-      artifactsToPublish: ${{ parameters.artifactsToPublish}}
-      deploymentScope: ${{ parameters.deploymentScope}}
-      bicepParamExt: ${{ parameters.bicepParamExt}}
-  - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main')}}:
-    - template: stages/dacpac_infra_deploy_stage.yml@templates
-      parameters:
-        projectConfigurations: ${{ parameters.projectNamesConfigurations }}
-        serviceName: ${{ parameters.serviceName }}
-        deploymentScope: ${{ parameters.deploymentScope}}
-        bicepParamExt: ${{ parameters.bicepParamExt}}
+- stage: bicepaadentra_build
+  - job: build_publish_sql_sqlmoveme
+    steps:
+    - task: UseDotNet@2
+      displayName: Use .NET SDK v3.1.x
+      inputs:
+        packageType: 'sdk'
+        version: 3.1.x
+        includePreviewVersions: true
+    - task: DotNetCoreCLI@2
+      displayName: dotnet build
+      inputs:
+        command: build
+        projects: $(Build.SourcesDirectory)/src/sqlmoveme/*.sqlproj
+        arguments: --configuration Release /p:NetCoreBuild=true
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Pipeline Artifact sqlmoveme_dev_Release '
+      inputs:
+        targetPath: $(Build.SourcesDirectory)/src/sqlmoveme/bin/Release
+        artifact: sqlmoveme_dev_Release
+        properties: ''
