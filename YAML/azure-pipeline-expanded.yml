@@ -57,8 +57,6 @@ stages:
         packageType: 'sdk'
         version: ''
         includePreviewVersions: true
-    - task: NuGetAuthenticate@0
-      displayName: 'NuGet Authenticate'
     - task: DotNetCoreCLI@2
       displayName: dotnet build
       inputs:
