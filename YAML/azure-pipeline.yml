@@ -46,6 +46,6 @@ stages:
               ServerName: sql-bicepaadentra-dev2-eus.database.windows.net
               DatabaseName: sqlmoveme
               deployType: DacpacTask
-              DacpacFile: $(Agent.BuildDirectory)\sqlmoveme\**\*.dacpac
+              DacpacFile: $(Agent.BuildDirectory)\sqlmoveme_dev_Release\**\*.dacpac
               AdditionalArguments: ''
               DeleteFirewallRule: True
