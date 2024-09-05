@@ -26,3 +26,26 @@ stages:
         targetPath: $(Build.SourcesDirectory)/src/sqlmoveme/bin/Release
         artifact: sqlmoveme_dev_Release
         properties: ''
+- stage: sqlmoveemecicd_dev2_eus_dacpac_deploy
+  jobs:
+  - deployment: sqlmoveemecicd_app_dev2_eus
+    environment:
+      name: dev2
+    dependsOn: []
+   
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: SqlAzureDacpacDeployment@1
+            displayName: Publish sqlmoveme on sql-bicepaadentra-dev2-eus.database.windows.net
+            inputs:
+              DeploymentAction: Publish
+              azureSubscription: AzureDevExtServiceConnection
+              AuthenticationType: servicePrincipal
+              ServerName: sql-bicepaadentra-dev2-eus.database.windows.net
+              DatabaseName: sqlmoveme
+              deployType: DacpacTask
+              DacpacFile: $(Agent.BuildDirectory)\sqlmoveme\**\*.dacpac
+              AdditionalArguments: ''
+              DeleteFirewallRule: True
