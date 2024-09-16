@@ -70,27 +70,3 @@ stages:
               AdditionalArguments: ''
               DeleteFirewallRule: True
 
-
-  jobs:
-  - deployment: sqlmoveemecicd_app_tst_cus
-    environment:
-      name: tst
-    dependsOn: []
-   
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: SqlAzureDacpacDeployment@1
-            displayName: Publish sqlmoveme on sql-adventureworksentra-tst-cus.database.windows.net
-            inputs:
-              DeploymentAction: Publish
-              azureSubscription: AzureTstServiceConnection
-              AuthenticationType: servicePrincipal
-              ServerName: sql-adventureworksentra-tst-cus.database.windows.net
-              DatabaseName: sqlmoveme
-              deployType: DacpacTask
-              DacpacFile: $(Agent.BuildDirectory)\sqlmoveme_tst_tst\**\*.dacpac
-              AdditionalArguments: ''
-              DeleteFirewallRule: True
-
