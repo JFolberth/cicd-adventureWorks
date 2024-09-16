@@ -26,9 +26,9 @@ stages:
         targetPath: $(Build.SourcesDirectory)/src/sqlmoveme/bin/dev
         artifact: sqlmoveme_dev_dev
         properties: ''
-- stage: sqlmoveemecicd_dev2_cus_dacpac_deploy
+- stage: sqlmoveemecicd_dev_cus_dacpac_deploy
   jobs:
-  - deployment: sqlmoveemecicd_app_dev2_cus
+  - deployment: sqlmoveemecicd_app_dev_cus
     environment:
       name: dev2
     dependsOn: []
@@ -38,12 +38,12 @@ stages:
         deploy:
           steps:
           - task: SqlAzureDacpacDeployment@1
-            displayName: Publish sqlmoveme on sql-bicepaadentra-dev-cus.database.windows.net
+            displayName: Publish sqlmoveme on sql-adventureworksentra-dev-cus.database.windows.net
             inputs:
               DeploymentAction: Publish
               azureSubscription: AzureDevExtServiceConnection
               AuthenticationType: servicePrincipal
-              ServerName: sql-bicepaadentra-dev-cus.database.windows.net
+              ServerName: sql-adventureworksentra-dev-cus.database.windows.net
               DatabaseName: sqlmoveme
               deployType: DacpacTask
               DacpacFile: $(Agent.BuildDirectory)\sqlmoveme_dev_dev\**\*.dacpac
