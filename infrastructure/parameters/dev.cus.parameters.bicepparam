@@ -1,0 +1,5 @@
+using '../main.bicep'
+param location = 'centralus'
+param language = 'Bicep'
+param serverBaseName = 'adventureworksentra'
+param environmentName = 'dev'
