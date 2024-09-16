@@ -2,7 +2,7 @@
 USE [sqlmoveme]
 IF NOT Exists(SELECT * FROM sys.database_principals WHERE name = 'sqlmoveme_dev_admins')  
     CREATE USER  [sqlmoveme_dev_admins] FROM EXTERNAL PROVIDER
-EXEC sp_addrolemember 'db_owner','sqlmoveme_dev_admins';
+    EXEC sp_addrolemember 'db_owner','sqlmoveme_dev_admins';
 GO
 
 -- DROP AND RELOAD DATA SECTION
