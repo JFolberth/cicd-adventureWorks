@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'dev|AnyCPU' ">
-    <PostDeploy  Include="scripts\dev.post.sqlmoveme.security.sql" />
+    <PostDeploy  Include="scripts\dev.post.script.sql" />
   </ItemGroup>
   <Import Condition="'$(NetCoreBuild)' == 'true'" Project="$(NETCoreTargetsPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <Import Condition="'$(NetCoreBuild)' != 'true' AND '$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
@@ -92,6 +92,7 @@
   </ItemGroup>
     <ItemGroup>
     <None Include="scripts\dev.post.sqlmoveme.security.sql" />
+    <None Include="scripts\dev.post.script.sql" />
     <None Include="scripts\tst.post.sqlmoveme.security.sql" />
   </ItemGroup>
   <Target Name="BeforeBuild">

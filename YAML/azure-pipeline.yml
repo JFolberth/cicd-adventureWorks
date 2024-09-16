@@ -41,7 +41,7 @@ stages:
         projects: $(Build.SourcesDirectory)/src/sqlmoveme/*.sqlproj
         arguments: --configuration tst /p:NetCoreBuild=true
     - task: PublishPipelineArtifact@1
-      displayName: 'Publish Pipeline Artifact sqlmoveme_tst_tst '
+      displayName: 'Publish Pipeline Artifact sqlmoveme__tst '
       inputs:
         targetPath: $(Build.SourcesDirectory)/src/sqlmoveme/bin/tst
         artifact: sqlmoveme_tst_tst
@@ -69,7 +69,8 @@ stages:
               DacpacFile: $(Agent.BuildDirectory)\sqlmoveme_dev_dev\**\*.dacpac
               AdditionalArguments: ''
               DeleteFirewallRule: True
-- stage: sqlmoveemecicd_tst_cus_dacpac_deploy
+
+
   jobs:
   - deployment: sqlmoveemecicd_app_tst_cus
     environment:
