@@ -26,26 +26,6 @@ stages:
         targetPath: $(Build.SourcesDirectory)/src/sqlmoveme/bin/dev
         artifact: sqlmoveme_dev_dev
         properties: ''
-  - job: build_publish_sql_sqlmoveme_tst
-    steps:
-    - task: UseDotNet@2
-      displayName: Use .NET SDK v3.1.x
-      inputs:
-        packageType: 'sdk'
-        version: 3.1.x
-        includePreviewVersions: true
-    - task: DotNetCoreCLI@2
-      displayName: dotnet build
-      inputs:
-        command: build
-        projects: $(Build.SourcesDirectory)/src/sqlmoveme/*.sqlproj
-        arguments: --configuration tst /p:NetCoreBuild=true
-    - task: PublishPipelineArtifact@1
-      displayName: 'Publish Pipeline Artifact sqlmoveme__tst '
-      inputs:
-        targetPath: $(Build.SourcesDirectory)/src/sqlmoveme/bin/tst
-        artifact: sqlmoveme_tst_tst
-        properties: ''
 - stage: sqlmoveemecicd_dev_cus_dacpac_deploy
   jobs:
   - deployment: sqlmoveemecicd_app_dev_cus
