@@ -35,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'tst|AnyCPU' ">
+    <PostDeploy  Include="scripts\tst.post.sqlmoveme.security.sql" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'dev|AnyCPU' ">
     <OutputPath>bin\dev\</OutputPath>
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
@@ -89,6 +92,7 @@
   </ItemGroup>
     <ItemGroup>
     <None Include="scripts\dev.post.sqlmoveme.security.sql" />
+    <None Include="scripts\tst.post.sqlmoveme.security.sql" />
   </ItemGroup>
   <Target Name="BeforeBuild">
     <Delete Files="$(BaseIntermediateOutputPath)\project.assets.json" />
