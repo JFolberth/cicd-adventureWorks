@@ -19,16 +19,16 @@ stages:
       inputs:
         command: build
         projects: $(Build.SourcesDirectory)/src/sqlmoveme/*.sqlproj
-        arguments: --configuration Release /p:NetCoreBuild=true
+        arguments: --configuration dev /p:NetCoreBuild=true
     - task: PublishPipelineArtifact@1
-      displayName: 'Publish Pipeline Artifact sqlmoveme_dev_Release '
+      displayName: 'Publish Pipeline Artifact sqlmoveme_dev_dev '
       inputs:
-        targetPath: $(Build.SourcesDirectory)/src/sqlmoveme/bin/Release
-        artifact: sqlmoveme_dev_Release
+        targetPath: $(Build.SourcesDirectory)/src/sqlmoveme/bin/dev
+        artifact: sqlmoveme_dev_dev
         properties: ''
-- stage: sqlmoveemecicd_dev2_eus_dacpac_deploy
+- stage: sqlmoveemecicd_dev2_cus_dacpac_deploy
   jobs:
-  - deployment: sqlmoveemecicd_app_dev2_eus
+  - deployment: sqlmoveemecicd_app_dev2_cus
     environment:
       name: dev2
     dependsOn: []
@@ -38,14 +38,14 @@ stages:
         deploy:
           steps:
           - task: SqlAzureDacpacDeployment@1
-            displayName: Publish sqlmoveme on sql-bicepaadentra-dev2-eus.database.windows.net
+            displayName: Publish sqlmoveme on sql-bicepaadentra-dev-cus.database.windows.net
             inputs:
               DeploymentAction: Publish
               azureSubscription: AzureDevExtServiceConnection
               AuthenticationType: servicePrincipal
-              ServerName: sql-bicepaadentra-dev2-eus.database.windows.net
+              ServerName: sql-bicepaadentra-dev-cus.database.windows.net
               DatabaseName: sqlmoveme
               deployType: DacpacTask
-              DacpacFile: $(Agent.BuildDirectory)\sqlmoveme_dev_Release\**\*.dacpac
+              DacpacFile: $(Agent.BuildDirectory)\sqlmoveme_dev_dev\**\*.dacpac
               AdditionalArguments: ''
               DeleteFirewallRule: True
