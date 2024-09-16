@@ -41,7 +41,7 @@ stages:
             displayName: Publish sqlmoveme on sql-adventureworksentra-dev-cus.database.windows.net
             inputs:
               DeploymentAction: Publish
-              azureSubscription: AzureDevExtServiceConnection
+              azureSubscription: AzureDevServiceConnection
               AuthenticationType: servicePrincipal
               ServerName: sql-adventureworksentra-dev-cus.database.windows.net
               DatabaseName: sqlmoveme
