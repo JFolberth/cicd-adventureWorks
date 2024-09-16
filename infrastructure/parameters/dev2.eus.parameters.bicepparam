@@ -1,5 +1,0 @@
-using '../main.bicep'
-param location = 'eastus'
-param language = 'Bicep'
-param serverBaseName = 'bicepaadentra'
-param environmentName = 'dev2'
