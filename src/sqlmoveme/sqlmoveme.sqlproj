@@ -90,6 +90,11 @@
     <Build Include="SalesLT\Views\vProductModelCatalogDescription.sql" />
     <Build Include="Security\SalesLT.sql" />
   </ItemGroup>
+  <ItemGroup>
+  <Build Remove="scripts\dev.post.sqlmoveme.security.sql" />
+  <Build Remove="scripts\dev.post.sqlmoveme.seed.sql" />
+  <Build Remove="scripts\dev.post.script.sql" />
+  </ItemGroup>
     <ItemGroup>
     <None Include="scripts\dev.post.sqlmoveme.security.sql" />
     <None Include="scripts\dev.post.sqlmoveme.seed.sql" />
