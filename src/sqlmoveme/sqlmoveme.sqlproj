@@ -91,14 +91,20 @@
     <Build Include="Security\SalesLT.sql" />
   </ItemGroup>
   <ItemGroup>
-  <Build Remove="scripts\dev.post.sqlmoveme.security.sql" />
-  <Build Remove="scripts\dev.post.sqlmoveme.seed.sql" />
-  <Build Remove="scripts\dev.post.script.sql" />
+    <Build Remove="scripts\dev.post.sqlmoveme.security.sql" />
+    <Build Remove="scripts\dev.post.sqlmoveme.seed.sql" />
+    <Build Remove="scripts\dev.post.script.sql" />
+    <Build Remove="scripts\tst.post.sqlmoveme.security.sql" />
+    <Build Remove="scripts\tst.post.sqlmoveme.seed.sql" />
+    <Build Remove="scripts\tst.post.script.sql" />
   </ItemGroup>
     <ItemGroup>
     <None Include="scripts\dev.post.sqlmoveme.security.sql" />
     <None Include="scripts\dev.post.sqlmoveme.seed.sql" />
     <None Include="scripts\dev.post.script.sql" />
+    <None Include="scripts\tst.post.sqlmoveme.security.sql" />
+    <None Include="scripts\tst.post.sqlmoveme.seed.sql" />
+    <None Include="scripts\tst.post.script.sql" />
   </ItemGroup>
   <Target Name="BeforeBuild">
     <Delete Files="$(BaseIntermediateOutputPath)\project.assets.json" />
