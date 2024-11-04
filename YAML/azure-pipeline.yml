@@ -41,9 +41,6 @@ parameters:
   - name: serviceName
     type: string
     default: 'adventureworksentra'
-  - name: artifactsToPublish
-    type: object
-    default: ['security', 'infrastructure']
 
 stages:
   - template: stages/dotnet_sql_build_stage.yml@templates
