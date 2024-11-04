@@ -4,6 +4,7 @@ resources:
     type: github
     name: JFolberth/TheYAMLPipelineOne
     endpoint: JFolberth
+    ref: fix/dacpac_deploy_publish
 
 trigger:
   - none
