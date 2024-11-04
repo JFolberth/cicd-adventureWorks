@@ -26,7 +26,18 @@ parameters:
         ipDetectionMethod: 'AutoDetect'
         deployType: 'DacpacTask'
         authenticationType: 'servicePrincipal'
-        projectConfiguration: 'Release'
+        projectConfiguration: 'dev'
+      - projectName: 'sqlmoveme'
+        environmentName: 'tst'
+        regionAbrvs: ['cus']
+        projectExtension: '.sqlproj'
+        buildArguments: '/p:NetCoreBuild=true'
+        sqlServerName: 'adventureworksentra'
+        sqlDatabaseName: 'moveme'
+        ipDetectionMethod: 'AutoDetect'
+        deployType: 'DacpacTask'
+        authenticationType: 'servicePrincipal'
+        projectConfiguration: 'tst'
   - name: serviceName
     type: string
     default: 'adventureworksentra'
@@ -41,7 +52,6 @@ stages:
       serviceName: '${{ parameters.serviceName}}'
       artifactsToPublish: ${{ parameters.artifactsToPublish}}
 
-  - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main')}}:
     - template: stages/dacpac_infra_deploy_stage.yml@templates
       parameters:
         projectConfigurations: ${{ parameters.projectNamesConfigurations }}
