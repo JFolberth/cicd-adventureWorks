@@ -1,8 +1,44 @@
+resources:
+  repositories:
+  - repository: templates
+    type: github
+    name: JFolberth/TheYAMLPipelineOne
+    endpoint: JFolberth
+
 trigger:
-  none
+  - none
 
 pool:
   vmImage: 'windows-latest'
+
+parameters:
+  - name: projectNamesConfigurations
+    type: object
+    default:
+      - projectName: 'sqlmoveme'
+        environmentName: 'dev'
+        regionAbrvs: ['cus']
+        projectExtension: '.sqlproj'
+        buildArguments: '/p:NetCoreBuild=true'
+        sqlServerName: 'adventureworksentra'
+        sqlDatabaseName: 'moveme'
+        resourceGroupName: adventureworksentra
+        ipDetectionMethod: 'AutoDetect'
+        deployType: 'DacpacTask'
+        authenticationType: 'servicePrincipal'
+        projectConfiguration: 'Release'
+  - name: serviceName
+    type: string
+    default: 'adventureworksentra'
+  - name: artifactsToPublish
+    type: object
+    default: ['security', 'infrastructure']
+  - name: deploymentScope
+    type: string
+    default: 'resourceGroup'
+  - name: bicepParamExt
+    type: boolean
+    default: true
 stages:
 - stage: bicepaadentra_build
   jobs:
@@ -46,50 +82,16 @@ stages:
         targetPath: $(Build.SourcesDirectory)/src/sqlmoveme/bin/tst
         artifact: sqlmoveme_tst_tst
         properties: ''
-- stage: sqlmoveemecicd_dev_cus_dacpac_deploy
-  jobs:
-  - deployment: sqlmoveemecicd_app_dev_cus
-    environment:
-      name: dev
-    dependsOn: []
-   
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: SqlAzureDacpacDeployment@1
-            displayName: Publish sqlmoveme on sql-adventureworksentra-dev-cus.database.windows.net
-            inputs:
-              DeploymentAction: Publish
-              azureSubscription: AzureDevServiceConnection
-              AuthenticationType: servicePrincipal
-              ServerName: sql-adventureworksentra-dev-cus.database.windows.net
-              DatabaseName: sqlmoveme
-              deployType: DacpacTask
-              DacpacFile: $(Agent.BuildDirectory)\sqlmoveme_dev_dev\**\*.dacpac
-              AdditionalArguments: ''
-              DeleteFirewallRule: True
-- stage: sqlmoveemecicd_tst_cus_dacpac_deploy
-  jobs:
-  - deployment: sqlmoveemecicd_app_tst_cus
-    environment:
-      name: tst
-    dependsOn: []
-   
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: SqlAzureDacpacDeployment@1
-            displayName: Publish sqlmoveme on sql-adventureworksentra-tst-cus.database.windows.net
-            inputs:
-              DeploymentAction: Publish
-              azureSubscription: AzureTstServiceConnection
-              AuthenticationType: servicePrincipal
-              ServerName: sql-adventureworksentra-tst-cus.database.windows.net
-              DatabaseName: sqlmoveme
-              deployType: DacpacTask
-              DacpacFile: $(Agent.BuildDirectory)\sqlmoveme_tst_tst\**\*.dacpac
-              AdditionalArguments: ''
-              DeleteFirewallRule: True
+stages:
+  - template: stages/dotnet_sql_build_stage.yml@templates
+    parameters:
+      projectNamesConfigurations: ${{ parameters.projectNamesConfigurations}}
+      serviceName: '${{ parameters.serviceName}}'
+      artifactsToPublish: ${{ parameters.artifactsToPublish}}
+
+  - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main')}}:
+    - template: stages/dacpac_infra_deploy_stage.yml@templates
+      parameters:
+        projectConfigurations: ${{ parameters.projectNamesConfigurations }}
+        serviceName: ${{ parameters.serviceName }}
 
