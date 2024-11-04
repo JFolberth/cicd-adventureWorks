@@ -15,8 +15,8 @@ parameters:
   - name: projectNamesConfigurations
     type: object
     default:
-      - projectName: 'sqlmoveme'
-        environmentName: 'dev' 
+      - environmentName: 'dev'
+        projectName: 'sqlmoveme'
         regionAbrvs: ['cus']
         projectExtension: '.sqlproj'
         buildArguments: '/p:NetCoreBuild=true'
@@ -27,8 +27,8 @@ parameters:
         deployType: 'DacpacTask'
         authenticationType: 'servicePrincipal'
         projectConfiguration: 'dev'
-      - projectName: 'sqlmoveme'
-        environmentName: 'tst'
+      - environmentName: 'tst'
+        projectName: 'sqlmoveme'
         regionAbrvs: ['cus']
         projectExtension: '.sqlproj'
         buildArguments: '/p:NetCoreBuild=true'
