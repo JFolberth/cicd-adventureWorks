@@ -27,7 +27,7 @@ parameters:
         ipDetectionMethod: 'AutoDetect'
         deployType: 'DacpacTask'
         authenticationType: 'servicePrincipal'
-        projectConfiguration: 'dev'
+        buildConfiguration: 'dev'
       
       - projectName: 'sqlmoveme'
         environmentName: 'tst'
@@ -39,7 +39,7 @@ parameters:
         ipDetectionMethod: 'AutoDetect'
         deployType: 'DacpacTask'
         authenticationType: 'servicePrincipal'
-        projectConfiguration: 'tst'
+        buildConfiguration: 'tst'
   - name: serviceName
     type: string
     default: 'adventureworksentra'
