@@ -20,7 +20,7 @@ parameters:
         environmentName: 'dev'
         regionAbrvs: ['cus']
         projectExtension: '.sqlproj'
-        buildArguments: '/p:NetCoreBuild=true'
+        buildArguments: '/p:NetCoreBuild=true /p:DacVersion=1.0.1'
         sqlServerName: 'adventureworksentra'
         sqlDatabaseName: 'moveme'
         resourceGroupName: adventureworksentra
@@ -34,7 +34,7 @@ parameters:
         environmentName: 'tst'
         regionAbrvs: ['cus']
         projectExtension: '.sqlproj'
-        buildArguments: '/p:NetCoreBuild=true'
+        buildArguments: '/p:NetCoreBuild=true  /p:DacVersion=1.0.1'
         sqlServerName: 'adventureworksentra'
         sqlDatabaseName: 'moveme'
         ipDetectionMethod: 'AutoDetect'
