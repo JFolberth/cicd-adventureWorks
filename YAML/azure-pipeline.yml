@@ -28,7 +28,7 @@ parameters:
         deployType: 'DacpacTask'
         authenticationType: 'servicePrincipal'
         buildConfiguration: 'dev'
-        dacpacAdditionalArguments: '/p:DropObjectsNotInSource=true'
+        dacpacAdditionalArguments: '/p:DropObjectsNotInSource=true /p:RegisterDataTierApplication=true'
       
       - projectName: 'sqlmoveme'
         environmentName: 'tst'
@@ -41,6 +41,7 @@ parameters:
         deployType: 'DacpacTask'
         authenticationType: 'servicePrincipal'
         buildConfiguration: 'tst'
+        dacpacAdditionalArguments: '/p:DropObjectsNotInSource=true /p:RegisterDataTierApplication=true'
   - name: serviceName
     type: string
     default: 'adventureworksentra'
