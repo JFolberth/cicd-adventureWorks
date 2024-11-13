@@ -30,18 +30,7 @@ parameters:
         buildConfiguration: 'dev'
         dacpacAdditionalArguments: '/p:DropObjectsNotInSource=true /p:RegisterDataTierApplication=true'
       
-      - projectName: 'sqlmoveme'
-        environmentName: 'tst'
-        regionAbrvs: ['cus']
-        projectExtension: '.sqlproj'
-        buildArguments: '/p:NetCoreBuild=true  /p:DacVersion=1.0.1'
-        sqlServerName: 'adventureworksentra'
-        sqlDatabaseName: 'moveme'
-        ipDetectionMethod: 'AutoDetect'
-        deployType: 'DacpacTask'
-        authenticationType: 'servicePrincipal'
-        buildConfiguration: 'tst'
-        dacpacAdditionalArguments: '/p:DropObjectsNotInSource=true /p:RegisterDataTierApplication=true'
+
   - name: serviceName
     type: string
     default: 'adventureworksentra'
