@@ -27,7 +27,7 @@ parameters:
         deployType: 'DacpacTask'
         authenticationType: 'servicePrincipal'
         buildConfiguration: 'dev'
-        dacpacAdditionalArguments: '/p:DropObjectsNotInSource=true /p:RegisterDataTierApplication=true /p:BlockOnPossibleDataLoss=false'
+        dacpacAdditionalArguments: '/p:DropObjectsNotInSource=true /p:BlockOnPossibleDataLoss=false'
       - projectName: 'sqlmoveme' 
         environmentName: 'tst'
         regionAbrvs: ['cus']
@@ -40,7 +40,7 @@ parameters:
         deployType: 'DacpacTask'
         authenticationType: 'servicePrincipal'
         buildConfiguration: 'tst'
-        dacpacAdditionalArguments: '/p:DropObjectsNotInSource=true /p:RegisterDataTierApplication=true /p:BlockOnPossibleDataLoss=false'
+        dacpacAdditionalArguments: '/p:DropObjectsNotInSource=true /p:BlockOnPossibleDataLoss=false'
       
 
   - name: serviceName
