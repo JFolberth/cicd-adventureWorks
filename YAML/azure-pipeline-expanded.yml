@@ -1,0 +1,199 @@
+resources:
+trigger:
+  branches:
+    include:
+    - none
+pool:
+  vmImage: 'windows-latest'
+parameters:
+- name: projectNamesConfigurations
+  type: object
+  default:
+  - projectName: 'sqlmoveme'
+    environmentName: 'dev'
+    regionAbrvs:
+    - 'cus'
+    projectExtension: '.sqlproj'
+    buildArguments: '/p:NetCoreBuild=true /p:DacVersion=1.0.1'
+    sqlServerName: 'adventureworksentra'
+    sqlDatabaseName: 'moveme'
+    resourceGroupName: adventureworksentra
+    ipDetectionMethod: 'AutoDetect'
+    deployType: 'DacpacTask'
+    authenticationType: 'servicePrincipal'
+    buildConfiguration: 'dev'
+    dacpacAdditionalArguments: '/p:DropObjectsNotInSource=true /p:BlockOnPossibleDataLoss=false'
+  - projectName: 'sqlmoveme'
+    environmentName: 'tst'
+    regionAbrvs:
+    - 'cus'
+    projectExtension: '.sqlproj'
+    buildArguments: '/p:NetCoreBuild=true /p:DacVersion=1.0'
+    sqlServerName: 'adventureworksentra'
+    sqlDatabaseName: 'moveme'
+    resourceGroupName: adventureworksentra
+    ipDetectionMethod: 'AutoDetect'
+    deployType: 'DacpacTask'
+    authenticationType: 'servicePrincipal'
+    buildConfiguration: 'tst'
+    dacpacAdditionalArguments: '/p:DropObjectsNotInSource=true /p:BlockOnPossibleDataLoss=false'
+- name: serviceName
+  type: string
+  default: 'adventureworksentra'
+stages:
+- stage: adventureworksentra_build
+  jobs:
+  - job: build_publish_sql_sqlmoveme_dev_dev
+    steps:
+    - task: UseDotNet@2
+      displayName: Use .NET SDK v
+      inputs:
+        packageType: 'sdk'
+        version: ''
+        includePreviewVersions: true
+    - task: DotNetCoreCLI@2
+      displayName: dotnet build
+      inputs:
+        command: build
+        projects: $(Build.SourcesDirectory)/src/sqlmoveme/*.sqlproj
+        arguments: --configuration dev /p:NetCoreBuild=true /p:DacVersion=1.0.1
+    - task: SqlAzureDacpacDeployment@1
+      displayName: DeployReport sqlmoveme on sql-adventureworksentra-dev-cus.database.windows.net
+      inputs:
+        DeploymentAction: DeployReport
+        azureSubscription: AzureDevServiceConnection
+        AuthenticationType: servicePrincipal
+        ServerName: sql-adventureworksentra-dev-cus.database.windows.net
+        DatabaseName: sqlmoveme
+        deployType: DacpacTask
+        DacpacFile: $(Agent.BuildDirectory)\s/src/sqlmoveme/bin/dev/sqlmoveme.dacpac
+        AdditionalArguments: ''
+        DeleteFirewallRule: True
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: GeneratedOutputFiles
+        Contents: '**'
+        TargetFolder: $(Build.SourcesDirectory)/src/sqlmoveme/bin/dev/cus
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Pipeline Artifact sqlmoveme_dev_dev '
+      inputs:
+        targetPath: $(Build.SourcesDirectory)/src/sqlmoveme/bin/dev
+        artifact: sqlmoveme_dev_dev
+        properties: ''
+  - job: build_publish_sql_sqlmoveme_tst_tst
+    steps:
+    - task: UseDotNet@2
+      displayName: Use .NET SDK v
+      inputs:
+        packageType: 'sdk'
+        version: ''
+        includePreviewVersions: true
+    - task: DotNetCoreCLI@2
+      displayName: dotnet build
+      inputs:
+        command: build
+        projects: $(Build.SourcesDirectory)/src/sqlmoveme/*.sqlproj
+        arguments: --configuration tst /p:NetCoreBuild=true /p:DacVersion=1.0
+    - task: SqlAzureDacpacDeployment@1
+      displayName: DeployReport sqlmoveme on sql-adventureworksentra-tst-cus.database.windows.net
+      inputs:
+        DeploymentAction: DeployReport
+        azureSubscription: AzureTstServiceConnection
+        AuthenticationType: servicePrincipal
+        ServerName: sql-adventureworksentra-tst-cus.database.windows.net
+        DatabaseName: sqlmoveme
+        deployType: DacpacTask
+        DacpacFile: $(Agent.BuildDirectory)\s/src/sqlmoveme/bin/tst/sqlmoveme.dacpac
+        AdditionalArguments: ''
+        DeleteFirewallRule: True
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: GeneratedOutputFiles
+        Contents: '**'
+        TargetFolder: $(Build.SourcesDirectory)/src/sqlmoveme/bin/tst/cus
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Pipeline Artifact sqlmoveme_tst_tst '
+      inputs:
+        targetPath: $(Build.SourcesDirectory)/src/sqlmoveme/bin/tst
+        artifact: sqlmoveme_tst_tst
+        properties: ''
+- stage: adventureworksentra_dev_cus_dacpac_deploy
+  jobs:
+  - deployment: adventureworksentra_app_dev_cus
+    environment:
+      name: dev
+    dependsOn: []
+    
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: SqlAzureDacpacDeployment@1
+            displayName: DeployReport sqlmoveme on sql-adventureworksentra-dev-cus.database.windows.net
+            inputs:
+              DeploymentAction: DeployReport
+              azureSubscription: AzureDevServiceConnection
+              AuthenticationType: servicePrincipal
+              ServerName: sql-adventureworksentra-dev-cus.database.windows.net
+              DatabaseName: sqlmoveme
+              deployType: DacpacTask
+              DacpacFile: $(Agent.BuildDirectory)\sqlmoveme_dev_dev\**\*.dacpac
+              AdditionalArguments: ''
+              DeleteFirewallRule: False
+          - task: CopyFiles@2
+            inputs:
+              SourceFolder: GeneratedOutputFiles
+              Contents: '**'
+              TargetFolder: postDeploy/sql-adventureworksentra-dev-cus.database.windows.net/sqlmoveme
+          - task: SqlAzureDacpacDeployment@1
+            displayName: Publish sqlmoveme on sql-adventureworksentra-dev-cus.database.windows.net
+            inputs:
+              DeploymentAction: Publish
+              azureSubscription: AzureDevServiceConnection
+              AuthenticationType: servicePrincipal
+              ServerName: sql-adventureworksentra-dev-cus.database.windows.net
+              DatabaseName: sqlmoveme
+              deployType: DacpacTask
+              DacpacFile: $(Agent.BuildDirectory)\sqlmoveme_dev_dev\**\*.dacpac
+              AdditionalArguments: /p:DropObjectsNotInSource=true /p:BlockOnPossibleDataLoss=false
+              DeleteFirewallRule: True
+- stage: adventureworksentra_tst_cus_dacpac_deploy
+  jobs:
+  - deployment: adventureworksentra_app_tst_cus
+    environment:
+      name: tst
+    dependsOn: []
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: SqlAzureDacpacDeployment@1
+            displayName: DeployReport sqlmoveme on sql-adventureworksentra-tst-cus.database.windows.net
+            inputs:
+              DeploymentAction: DeployReport
+              azureSubscription: AzureTstServiceConnection
+              AuthenticationType: servicePrincipal
+              ServerName: sql-adventureworksentra-tst-cus.database.windows.net
+              DatabaseName: sqlmoveme
+              deployType: DacpacTask
+              DacpacFile: $(Agent.BuildDirectory)\sqlmoveme_tst_tst\**\*.dacpac
+              AdditionalArguments: ''
+              DeleteFirewallRule: False
+          - task: CopyFiles@2
+            inputs:
+              SourceFolder: GeneratedOutputFiles
+              Contents: '**'
+              TargetFolder: postDeploy/sql-adventureworksentra-tst-cus.database.windows.net/sqlmoveme
+          - task: SqlAzureDacpacDeployment@1
+            displayName: Publish sqlmoveme on sql-adventureworksentra-tst-cus.database.windows.net
+            inputs:
+              DeploymentAction: Publish
+              azureSubscription: AzureTstServiceConnection
+              AuthenticationType: servicePrincipal
+              ServerName: sql-adventureworksentra-tst-cus.database.windows.net
+              DatabaseName: sqlmoveme
+              deployType: DacpacTask
+              DacpacFile: $(Agent.BuildDirectory)\sqlmoveme_tst_tst\**\*.dacpac
+              AdditionalArguments: /p:DropObjectsNotInSource=true /p:BlockOnPossibleDataLoss=false
+              DeleteFirewallRule: True
+
